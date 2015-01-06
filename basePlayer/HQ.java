@@ -5,7 +5,7 @@ import battlecode.common.RobotInfo;
 import battlecode.common.RobotType;
 import battlecode.common.Team;
 
-public class HQ {
+public class HQ extends Entity {
 
 	public static void run(RobotController rc) {
 		try {					
