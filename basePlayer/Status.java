@@ -17,7 +17,7 @@ public class Status {
 	static final int numComputerChannel = 5;
 	static final int numDroneChannel = 6;
 	static final int numHandWashStationChannel = 7;
-	static final int numHeliPadChannel = 8;
+	static final int numHelipadChannel = 8;
 	static final int numLauncherChannel = 9;
 	static final int numMinerChannel = 10;
 	static final int numMinerFactoryChannel = 11;
