@@ -6,9 +6,7 @@ public class Tower {
 
 	public static void run(RobotController rc) {
 		try {					
-			if (rc.isWeaponReady()) {
-				Status.attackSomething(rc);
-			}
+			//TODO: Tower
 		} catch (Exception e) {
 			System.out.println("Tower Exception");
             e.printStackTrace();
