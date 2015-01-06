@@ -1,5 +1,7 @@
 package basePlayer;
 
+import java.util.Random;
+
 import battlecode.common.Direction;
 import battlecode.common.RobotController;
 
@@ -33,6 +35,7 @@ public class Status {
 	
 	// Game Variables
 	static Direction[] directions = {Direction.NORTH, Direction.NORTH_EAST, Direction.EAST, Direction.SOUTH_EAST, Direction.SOUTH, Direction.SOUTH_WEST, Direction.WEST, Direction.NORTH_WEST};
+	static Random rand = new Random();
 	
 	// Initialize Variables above
 	public static void init(RobotController rc) {
