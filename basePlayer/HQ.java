@@ -9,7 +9,7 @@ public class HQ extends Entity {
 
 	public static void run(RobotController rc) {
 		try {					
-			//TODO: HQ
+			countUnitsAndBroadcast(rc, rc.getTeam());
 		} catch (Exception e) {
 			System.out.println("HQ Exception");
             e.printStackTrace();
