@@ -1,15 +1,14 @@
-package BasePlayer;
+package basePlayer;
 
 import battlecode.common.RobotController;
-import battlecode.common.RobotInfo;
 
-public class Basher {
+public class Soldier {
 
 	public static void run(RobotController rc) {
 		try {
-            RobotInfo[] adjacentEnemies = rc.senseNearbyRobots(2, Status.enemyTeam);
-
-            // BASHERs attack automatically, so let's just move around mostly randomly
+            if (rc.isWeaponReady()) {
+				Status.attackSomething(rc);
+			}
 			if (rc.isCoreReady()) {
 				int fate = Status.rand.nextInt(1000);
 				if (fate < 800) {
@@ -19,7 +18,7 @@ public class Basher {
 				}
 			}
         } catch (Exception e) {
-			System.out.println("Basher Exception");
+			System.out.println("Soldier Exception");
 			e.printStackTrace();
         }
 	}
