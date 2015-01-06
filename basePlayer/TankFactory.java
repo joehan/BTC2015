@@ -2,7 +2,7 @@ package basePlayer;
 
 import battlecode.common.RobotController;
 
-public class TankFactory {
+public class TankFactory extends Entity {
 
 	public static void run(RobotController rc) {
 		try {

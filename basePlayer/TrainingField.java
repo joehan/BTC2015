@@ -2,7 +2,7 @@ package basePlayer;
 
 import battlecode.common.RobotController;
 
-public class TrainingField {
+public class TrainingField extends Entity {
 
 	public static void run(RobotController rc) {
 		try {

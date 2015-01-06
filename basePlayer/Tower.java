@@ -2,7 +2,7 @@ package basePlayer;
 
 import battlecode.common.RobotController;
 
-public class Tower {
+public class Tower extends Entity {
 
 	public static void run(RobotController rc) {
 		try {					

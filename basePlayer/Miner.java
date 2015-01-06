@@ -2,7 +2,7 @@ package basePlayer;
 
 import battlecode.common.RobotController;
 
-public class Miner {
+public class Miner extends Entity {
 
 	public static void run(RobotController rc) {
 		try {

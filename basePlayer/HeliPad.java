@@ -2,7 +2,7 @@ package basePlayer;
 
 import battlecode.common.RobotController;
 
-public class HeliPad {
+public class HeliPad extends Entity {
 
 	public static void run(RobotController rc) {
 		try {
