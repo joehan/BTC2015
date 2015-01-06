@@ -32,7 +32,7 @@ public class RobotPlayer {
 			} else if(type == RobotType.HANDWASHSTATION) {
 				HandWashStation.run(rc);
 			} else if(type == RobotType.HELIPAD) {
-				HeliPad.run(rc);
+				Helipad.run(rc);
 			} else if(type == RobotType.LAUNCHER) {
 				Launcher.run(rc);
 			} else if(type == RobotType.MINER) {
