@@ -2,6 +2,7 @@ package missileAndDrones;
 
 import battlecode.common.Direction;
 import battlecode.common.GameActionException;
+import battlecode.common.MapLocation;
 import battlecode.common.RobotController;
 import battlecode.common.RobotInfo;
 import battlecode.common.RobotType;
@@ -53,6 +54,41 @@ public class Entity {
 		}
 		if (offsetIndex < 8) {
 			rc.build(Status.directions[(dirint+offsets[offsetIndex]+8)%8], type);
+		}
+	}
+	
+	public static void mine(RobotController rc) throws GameActionException {
+		MapLocation myLoc = rc.getLocation();
+		if (rc.senseOre(rc.getLocation()) > 0) {
+			if (Status.rand.nextInt(3) < 2) {
+				rc.mine();
+			} else {
+				boolean hasMoved = false;
+				MapLocation[] locationsInRange = MapLocation.getAllMapLocationsWithinRadiusSq(myLoc, 9);
+				Status.shuffleArray(locationsInRange);
+				for (MapLocation loc : locationsInRange) {
+					if (rc.senseOre(loc) > 0 && Status.rand.nextInt(4) < 1) {
+						tryMove(rc.getLocation().directionTo(loc), rc);
+						hasMoved = true;
+					}
+				}
+				if (!hasMoved) {
+					tryMove(rc.getLocation().directionTo(rc.senseEnemyHQLocation()), rc);
+				}
+			}
+		} else {
+			boolean hasMoved = false;
+			MapLocation[] locationsInRange = MapLocation.getAllMapLocationsWithinRadiusSq(myLoc, 9);
+			Status.shuffleArray(locationsInRange);
+			for (MapLocation loc : locationsInRange) {
+				if (rc.senseOre(loc) > 0 && Status.rand.nextInt(4) < 1) {
+					tryMove(rc.getLocation().directionTo(loc), rc);
+					hasMoved = true;
+				}
+			}
+			if (!hasMoved) {
+				tryMove(rc.getLocation().directionTo(rc.senseEnemyHQLocation()), rc);
+			}
 		}
 	}
 

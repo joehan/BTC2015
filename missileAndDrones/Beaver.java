@@ -36,37 +36,8 @@ public class Beaver extends Entity {
 					tryBuild(Status.directions[rand.nextInt(8)],RobotType.HELIPAD, rc);
 				} else if((ore >= 500 && aerospaceLabs < 2) || (ore>=1000)) {
 					tryBuild(Status.directions[rand.nextInt(8)],RobotType.AEROSPACELAB, rc);
-				} else if (rc.senseOre(rc.getLocation()) > 0) {
-					if (rand.nextInt(3) < 2) {
-						rc.mine();
-					} else {
-						boolean hasMoved = false;
-						for (MapLocation loc : MapLocation.getAllMapLocationsWithinRadiusSq(myLoc, 9)) {
-							if (rc.senseOre(loc) > 0 && rand.nextInt(4) < 1) {
-								tryMove(rc.getLocation().directionTo(loc), rc);
-								hasMoved = true;
-							}
-						}
-						if (!hasMoved) {
-							tryMove(rc.getLocation().directionTo(rc.senseEnemyHQLocation()), rc);
-						}
-					}
 				} else {
-					//if (rand.nextInt(2) < 1) {
-						//tryMove(rc.getLocation().directionTo(rc.senseEnemyHQLocation()));
-					/*} else {
-						tryMove(directions[6]);
-					}*/
-					boolean hasMoved = false;
-					for (MapLocation loc : MapLocation.getAllMapLocationsWithinRadiusSq(myLoc, 9)) {
-						if (rc.senseOre(loc) > 0 && rand.nextInt(4) < 1) {
-							tryMove(rc.getLocation().directionTo(loc),rc);
-							hasMoved = true;
-						}
-					}
-					if (!hasMoved) {
-						tryMove(rc.getLocation().directionTo(rc.senseEnemyHQLocation()), rc);
-					}
+					mine(rc);
 				}
 			}
 	} catch (Exception e) {
