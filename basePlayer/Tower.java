@@ -7,7 +7,9 @@ public class Tower extends Entity {
 	public static void run(RobotController rc) {
 		while(true) {
 			try {					
-				//TODO: Tower
+				if(rc.isCoreReady()) {
+					attackSomething(rc);
+				}
 			} catch (Exception e) {
 				System.out.println("Tower Exception");
 	            e.printStackTrace();
