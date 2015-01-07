@@ -70,6 +70,7 @@ public class Entity {
 					if (rc.senseOre(loc) > 0 && Status.rand.nextInt(4) < 1) {
 						tryMove(rc.getLocation().directionTo(loc), rc);
 						hasMoved = true;
+						break;
 					}
 				}
 				if (!hasMoved) {
@@ -84,6 +85,7 @@ public class Entity {
 				if (rc.senseOre(loc) > 0 && Status.rand.nextInt(4) < 1) {
 					tryMove(rc.getLocation().directionTo(loc), rc);
 					hasMoved = true;
+					break;
 				}
 			}
 			if (!hasMoved) {

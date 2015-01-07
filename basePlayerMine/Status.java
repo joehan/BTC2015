@@ -39,7 +39,7 @@ public class Status {
 	
 	// Initialize Variables above
 	public static void init(RobotController rc) {
-		
+
 	}
 
 	/*
@@ -56,5 +56,13 @@ public class Status {
 	      ar[index] = ar[i];
 	      ar[i] = a;
 	    }
+	  }
+	  
+	  static double sumArray(double[] arr) {
+		  double sum = 0;
+		  for (double i : arr) {
+			  sum += i;
+		  }
+		  return sum;
 	  }
 }
