@@ -35,7 +35,7 @@ public class Status {
 	
 	// Game Variables
 	static Direction[] directions = {Direction.NORTH, Direction.NORTH_EAST, Direction.EAST, Direction.SOUTH_EAST, Direction.SOUTH, Direction.SOUTH_WEST, Direction.WEST, Direction.NORTH_WEST};
-	static Random rand = new Random();
+	static Random rand = new Random(Double.doubleToLongBits(Math.random()));
 	
 	// Initialize Variables above
 	public static void init(RobotController rc) {
