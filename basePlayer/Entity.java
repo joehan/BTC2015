@@ -64,7 +64,9 @@ public class Entity {
 				rc.mine();
 			} else {
 				boolean hasMoved = false;
-				for (MapLocation loc : MapLocation.getAllMapLocationsWithinRadiusSq(myLoc, 9)) {
+				MapLocation[] locationsInRange = MapLocation.getAllMapLocationsWithinRadiusSq(myLoc, 9);
+				Status.shuffleArray(locationsInRange);
+				for (MapLocation loc : locationsInRange) {
 					if (rc.senseOre(loc) > 0 && Status.rand.nextInt(4) < 1) {
 						tryMove(rc.getLocation().directionTo(loc), rc);
 						hasMoved = true;
@@ -76,7 +78,9 @@ public class Entity {
 			}
 		} else {
 			boolean hasMoved = false;
-			for (MapLocation loc : MapLocation.getAllMapLocationsWithinRadiusSq(myLoc, 9)) {
+			MapLocation[] locationsInRange = MapLocation.getAllMapLocationsWithinRadiusSq(myLoc, 9);
+			Status.shuffleArray(locationsInRange);
+			for (MapLocation loc : locationsInRange) {
 				if (rc.senseOre(loc) > 0 && Status.rand.nextInt(4) < 1) {
 					tryMove(rc.getLocation().directionTo(loc), rc);
 					hasMoved = true;
