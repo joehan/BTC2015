@@ -15,7 +15,11 @@ public class Launcher extends Entity {
 			if (rc.getMissileCount()>3){
         		MapLocation[] hisTowers = rc.senseEnemyTowerLocations();
         		MapLocation[] myTowers = rc.senseTowerLocations();
-        		Direction toHisTower = rc.getLocation().directionTo(hisTowers[0]);
+        		Direction toHisTower;
+        		if (hisTowers.length < 0)
+        			toHisTower = rc.getLocation().directionTo(hisTowers[0]);
+        		else
+        			toHisTower = rc.getLocation().directionTo(rc.senseEnemyHQLocation());
         		RobotInfo[] enemies = rc.senseNearbyRobots(36, rc.getTeam().opponent());
         		boolean shoot = true;
         		boolean inRange = false;
@@ -24,9 +28,16 @@ public class Launcher extends Entity {
         			if (rc.getLocation().directionTo(myTowers[tow]) == toHisTower){
         				shoot = false;
         			}
-        			if (rc.getLocation().distanceSquaredTo(hisTowers[0]) < 100){
-        				inRange = true;
+        			if (hisTowers.length>0){
+	        			if (rc.getLocation().distanceSquaredTo(hisTowers[0]) < 100){
+	        				inRange = true;
+	        			}
+        			} else {
+        				if (rc.getLocation().distanceSquaredTo(rc.senseEnemyHQLocation()) < 100){
+	        				inRange = true;
+	        			}
         			}
+        				
         			enemiesNear = (enemies.length > 0);
         		}
         		
@@ -39,12 +50,17 @@ public class Launcher extends Entity {
 			if (rc.isCoreReady()) {
 				MapLocation[] towers = rc.senseEnemyTowerLocations();
 				int fate = rand.nextInt(1000);
+				RobotInfo[] enemiesInRange = rc.senseNearbyRobots(36, rc.getTeam().opponent());
 				if (fate < 200) {
 					tryMove(Status.directions[rand.nextInt(8)],rc);
-				} else if (towers.length < 0){
-					tryMove(rc.getLocation().directionTo(towers[0]),rc);
+				} else if (towers.length > 0){
+					if (enemiesInRange.length==0){
+						tryMove(rc.getLocation().directionTo(towers[0]),rc);
+					}
 				} else{
-					tryMove(rc.getLocation().directionTo(rc.senseEnemyHQLocation()),rc);
+					if (enemiesInRange.length==0){
+						tryMove(rc.getLocation().directionTo(rc.senseEnemyHQLocation()),rc);
+					}
 				}
 			}
 		} catch (Exception e) {

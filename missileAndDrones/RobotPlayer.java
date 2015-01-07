@@ -12,7 +12,6 @@ public class RobotPlayer {
 		
 		while(true) {
 			
-			
 			if(type == RobotType.HQ) {
 				HQ.run(rc);
 			} else if(type == RobotType.AEROSPACELAB) {
