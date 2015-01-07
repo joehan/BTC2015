@@ -7,7 +7,12 @@ public class Miner extends Entity {
 	public static void run(RobotController rc) {
 		while(true) {
 			try {
-				//TODO: Miner
+				if (rc.isWeaponReady()) {
+					attackSomething(rc);
+				}
+				if (rc.isCoreReady()) {
+					mine(rc);
+				}
 			} catch (Exception e) {
 				System.out.println("Miner Exception");
 	            e.printStackTrace();
