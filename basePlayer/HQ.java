@@ -14,7 +14,7 @@ public class HQ extends Entity {
 					attackSomething(rc);
 				}
 
-				if (rc.isCoreReady() && rc.getTeamOre() >= 100 && fate < Math.pow(1.2,12-rc.readBroadcast(Status.numBeaverChannel))*10000) {
+				if (rc.isCoreReady() && rc.getTeamOre() >= RobotType.BEAVER.oreCost && fate < Math.pow(1.2,12-rc.readBroadcast(Status.numBeaverChannel))*10000) {
 					trySpawn(Status.directions[Status.rand.nextInt(8)], RobotType.BEAVER, rc);
 				}
 			} catch (Exception e) {
