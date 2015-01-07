@@ -7,7 +7,7 @@ public class Tower extends Entity {
 	public static void run(RobotController rc) {
 		while(true) {
 			try {					
-				if(rc.isCoreReady()) {
+				if(rc.isWeaponReady()) {
 					attackSomething(rc);
 				}
 			} catch (Exception e) {
