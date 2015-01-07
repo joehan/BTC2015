@@ -32,9 +32,7 @@ public class Beaver extends Entity {
 				int aerospaceLabs = rc.readBroadcast(Status.numAeroSpaceLabChannel);
 				double ore = rc.getTeamOre();
 				// build 5 depots, 1 helipad, 2 aerospace labs, then more aerospace labs if there is a surplus
-				if (ore >= 100 && depots < 8) {
-					tryBuild(Status.directions[rand.nextInt(8)],RobotType.SUPPLYDEPOT, rc);
-				} else if (ore >= 300 && helipads < 1) {
+				if (ore >= 300 && helipads < 1) {
 					tryBuild(Status.directions[rand.nextInt(8)],RobotType.HELIPAD, rc);
 				} else if((ore >= 500 && aerospaceLabs < 2) || (ore>=1000)) {
 					tryBuild(Status.directions[rand.nextInt(8)],RobotType.AEROSPACELAB, rc);

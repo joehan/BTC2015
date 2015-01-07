@@ -19,7 +19,7 @@ public class Drone extends Entity {
 				int fate = rand.nextInt(1000);
 				if (fate < 200) {
 					tryMove(Status.directions[rand.nextInt(8)],rc);
-				} else if (towers.length < 0) {
+				} else if (towers.length > 0) {
 					tryMove(rc.getLocation().directionTo(towers[0]),rc);
 				} else{
 					tryMove(rc.getLocation().directionTo(rc.senseEnemyHQLocation()),rc);
