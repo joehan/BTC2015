@@ -169,9 +169,32 @@ public class RobotPlayer {
                 }
             }
             
+            if (rc.getType() == RobotType.DRONE) {
+                try {
+                    if (rc.isWeaponReady()) {
+						attackSomething();
+					}
+                    int numSoldiers = rc.readBroadcast(1);
+					if (rc.isCoreReady()) {
+						MapLocation[] towers = rc.senseEnemyTowerLocations();
+						int fate = rand.nextInt(1000);
+						if (fate < 200) {
+							tryMove(directions[rand.nextInt(8)]);
+						} else if (towers.length < 0) {
+							tryMove(rc.getLocation().directionTo(towers[0]));
+						} else{
+							tryMove(rc.getLocation().directionTo(rc.senseEnemyHQLocation()));
+						}
+					}
+                } catch (Exception e) {
+					System.out.println("Soldier Exception");
+					e.printStackTrace();
+                }
+            }
+            
             if (rc.getType() == RobotType.LAUNCHER) {
                 try {
-                	if (rc.getMissileCount()>0){
+                	if (rc.getMissileCount()>3){
                 		MapLocation[] hisTowers = rc.senseEnemyTowerLocations();
                 		MapLocation[] myTowers = rc.senseTowerLocations();
                 		Direction toHisTower = rc.getLocation().directionTo(hisTowers[0]);
@@ -205,12 +228,6 @@ public class RobotPlayer {
 						} else{
 							tryMove(rc.getLocation().directionTo(rc.senseEnemyHQLocation()));
 						}
-					}else{
-						int fate = rand.nextInt(1000);
-						if (fate < 900) {
-							tryMove(directions[rand.nextInt(8)]);
-						} 
-						
 					}
                 } catch (Exception e) {
 					System.out.println("LauncherException");
@@ -242,25 +259,63 @@ public class RobotPlayer {
 					if (rc.isWeaponReady()) {
 						attackSomething();
 					}
-					
 					if (rc.isCoreReady()) {
-						int fate = rand.nextInt(1000);
-						System.out.println(rc.readBroadcast(104));
-						if (rc.readBroadcast(104)<5 && rc.getTeamOre() >= 150) {
+//						int fate = rand.nextInt(1000);
+//						if (fate < 8 && rc.getTeamOre() >= 300) {
+//							tryBuild(directions[rand.nextInt(8)],RobotType.BARRACKS);
+//						} else if (fate < 600) {
+//							rc.mine();
+//						} else if (fate < 900) {
+//							tryMove(directions[rand.nextInt(8)]);
+//						} else {
+//							tryMove(rc.senseHQLocation().directionTo(rc.getLocation()));
+//						}
+						MapLocation myLoc = rc.getLocation();
+						int depots = rc.readBroadcast(104);
+						int helipads = rc.readBroadcast(102);
+						int aerospaceLabs = rc.readBroadcast(103);
+						double ore = rc.getTeamOre();
+						// build 4 depots, 1 helipad, 2 aerospace labs, then more aerospace labs if there is a surplus
+						if (ore >= 100 && depots < 4) {
 							tryBuild(directions[rand.nextInt(8)],RobotType.SUPPLYDEPOT);
-						} else if (rc.readBroadcast(102)==0 && rc.getTeamOre() >= 300) {
+						} else if (ore >= 300 && helipads < 1) {
 							tryBuild(directions[rand.nextInt(8)],RobotType.HELIPAD);
-						} else if (rc.readBroadcast(102)>0 && rc.readBroadcast(103) < 3 && rc.getTeamOre() >= 500) {
-								tryBuild(directions[rand.nextInt(8)],RobotType.AEROSPACELAB);
-						} else if (fate < 600) {
-							rc.mine();
-						} else if (fate < 900) {
-							tryMove(directions[rand.nextInt(8)]);
+						} else if((ore >= 500 && aerospaceLabs < 2) || (ore>=1000)) {
+							tryBuild(directions[rand.nextInt(8)],RobotType.AEROSPACELAB);
+						} else if (rc.senseOre(rc.getLocation()) > 0) {
+							if (rand.nextInt(3) < 2) {
+								rc.mine();
+							} else {
+								boolean hasMoved = false;
+								for (MapLocation loc : MapLocation.getAllMapLocationsWithinRadiusSq(myLoc, 9)) {
+									if (rc.senseOre(loc) > 0 && rand.nextInt(4) < 1) {
+										tryMove(rc.getLocation().directionTo(loc));
+										hasMoved = true;
+									}
+								}
+								if (!hasMoved) {
+									tryMove(rc.getLocation().directionTo(rc.senseEnemyHQLocation()));
+								}
+							}
 						} else {
-							tryMove(rc.senseHQLocation().directionTo(rc.getLocation()));
+							//if (rand.nextInt(2) < 1) {
+								//tryMove(rc.getLocation().directionTo(rc.senseEnemyHQLocation()));
+							/*} else {
+								tryMove(directions[6]);
+							}*/
+							boolean hasMoved = false;
+							for (MapLocation loc : MapLocation.getAllMapLocationsWithinRadiusSq(myLoc, 9)) {
+								if (rc.senseOre(loc) > 0 && rand.nextInt(4) < 1) {
+									tryMove(rc.getLocation().directionTo(loc));
+									hasMoved = true;
+								}
+							}
+							if (!hasMoved) {
+								tryMove(rc.getLocation().directionTo(rc.senseEnemyHQLocation()));
+							}
 						}
 					}
-				} catch (Exception e) {
+			} catch (Exception e) {
 					System.out.println("Beaver Exception");
                     e.printStackTrace();
 				}
@@ -277,6 +332,22 @@ public class RobotPlayer {
 					
 					if (rc.isCoreReady() && rc.getTeamOre() >= 60 && fate < 5000) {
 						trySpawn(directions[rand.nextInt(8)],RobotType.SOLDIER);
+					}
+				} catch (Exception e) {
+					System.out.println("Barracks Exception");
+                    e.printStackTrace();
+				}
+			}
+            
+            if (rc.getType() == RobotType.HELIPAD) {
+				try {
+					
+					int depots = rc.readBroadcast(104);
+					int helipads = rc.readBroadcast(102);
+					int aerospaceLabs = rc.readBroadcast(103);
+					
+					if (rc.isCoreReady() && rc.getTeamOre() >= 1000) {
+						trySpawn(directions[rand.nextInt(8)],RobotType.DRONE);
 					}
 				} catch (Exception e) {
 					System.out.println("Barracks Exception");
