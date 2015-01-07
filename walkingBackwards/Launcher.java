@@ -53,9 +53,10 @@ public class Launcher extends Entity {
 					MapLocation[] towers = rc.senseEnemyTowerLocations();
 					int fate = rand.nextInt(1000);
 					RobotInfo[] enemiesInRange = rc.senseNearbyRobots(36, rc.getTeam().opponent());
+					RobotInfo[] enemiesInClose = rc.senseNearbyRobots(16, rc.getTeam().opponent());
 					boolean frightened = false;
 					Direction fleeDirection = Status.directions[0];
-					for (RobotInfo enemy: enemiesInRange){
+					for (RobotInfo enemy: enemiesInClose){
 						if (enemy.type == RobotType.MISSILE){
 							frightened = true;
 							fleeDirection = rc.getLocation().directionTo(enemy.location).opposite();
