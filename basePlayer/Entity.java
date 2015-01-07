@@ -70,6 +70,7 @@ public class Entity {
 					if (rc.senseOre(loc) > 0 && Status.rand.nextInt(4) < 1) {
 						tryMove(rc.getLocation().directionTo(loc), rc);
 						hasMoved = true;
+						break;
 					}
 				}
 				if (!hasMoved) {
@@ -84,6 +85,7 @@ public class Entity {
 				if (rc.senseOre(loc) > 0 && Status.rand.nextInt(4) < 1) {
 					tryMove(rc.getLocation().directionTo(loc), rc);
 					hasMoved = true;
+					break;
 				}
 			}
 			if (!hasMoved) {
@@ -93,7 +95,7 @@ public class Entity {
 	}
 	
 	public static boolean hunt(RobotType type, RobotController rc) throws GameActionException {
-		RobotInfo[] enemies = rc.senseNearbyRobots(Integer.MAX_VALUE, rc.getTeam().opponent());
+		RobotInfo[] enemies = rc.senseNearbyRobots(99999999, rc.getTeam().opponent());
 		for(RobotInfo enemy : enemies) {
 			if(enemy.type == type) {
 				tryMove(rc.getLocation().directionTo(enemy.location), rc);
