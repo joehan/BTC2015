@@ -91,6 +91,46 @@ public class Entity {
 			}
 		}
 	}
+	
+	public static boolean hunt(RobotType type, RobotController rc) throws GameActionException {
+		RobotInfo[] enemies = rc.senseNearbyRobots(99999999, rc.getTeam().opponent());
+		for(RobotInfo enemy : enemies) {
+			if(enemy.type == type) {
+				tryMove(rc.getLocation().directionTo(enemy.location), rc);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static boolean huntList(RobotType[] types, RobotController rc) throws GameActionException {
+		for(RobotType type : types) {
+			if(hunt(type, rc)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static boolean huntAttack(RobotType type, RobotController rc) throws GameActionException {
+		RobotInfo[] enemies = rc.senseNearbyRobots(rc.getType().attackRadiusSquared, rc.getTeam().opponent());
+		for(RobotInfo enemy : enemies) {
+			if(enemy.type == type) {
+				rc.attackLocation(enemy.location);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static boolean huntAttackList(RobotType[] types, RobotController rc) throws GameActionException {
+		for(RobotType type : types) {
+			if(huntAttack(type, rc)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	// Counts the number of each type of unit and broadcasts it.
 	public static void countUnitsAndBroadcast(RobotController rc, Team myTeam) throws GameActionException {
