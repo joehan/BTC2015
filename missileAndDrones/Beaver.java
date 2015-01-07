@@ -27,14 +27,16 @@ public class Beaver extends Entity {
 //					tryMove(rc.senseHQLocation().directionTo(rc.getLocation()));
 //				}
 				MapLocation myLoc = rc.getLocation();
-				int depots = rc.readBroadcast(Status.numSupplyDepotChannel);
+				int mineFactories = rc.readBroadcast(Status.numMinerFactoryChannel);
 				int helipads = rc.readBroadcast(Status.numHelipadChannel);
 				int aerospaceLabs = rc.readBroadcast(Status.numAeroSpaceLabChannel);
 				double ore = rc.getTeamOre();
 				// build 5 depots, 1 helipad, 2 aerospace labs, then more aerospace labs if there is a surplus
-				if (ore >= 300 && helipads < 1) {
+				if (ore >= RobotType.MINERFACTORY.oreCost && mineFactories==0){ 
+					tryBuild(Status.directions[rand.nextInt(8)],RobotType.MINERFACTORY, rc);
+				} else if (ore >= 300 && helipads < 1 && mineFactories>0) {
 					tryBuild(Status.directions[rand.nextInt(8)],RobotType.HELIPAD, rc);
-				} else if((ore >= 500 && aerospaceLabs < 2) || (ore>=1000)) {
+				} else if((ore >= 500 && aerospaceLabs < 2 && helipads>0) || (ore>=1000 && helipads>0)) {
 					tryBuild(Status.directions[rand.nextInt(8)],RobotType.AEROSPACELAB, rc);
 				} else {
 					mine(rc);
