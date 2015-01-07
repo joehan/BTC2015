@@ -1,4 +1,4 @@
-package missileAndDrones;
+package supplyDrone;
 
 import battlecode.common.RobotController;
 

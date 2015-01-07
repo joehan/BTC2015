@@ -1,4 +1,4 @@
-package missileAndDrones;
+package supplyDrone;
 
 import java.util.Random;
 
@@ -51,7 +51,7 @@ public class Launcher extends Entity {
 				if (rc.isCoreReady()) {
 					MapLocation[] towers = rc.senseEnemyTowerLocations();
 					int fate = rand.nextInt(1000);
-					RobotInfo[] enemiesInRange = rc.senseNearbyRobots(80, rc.getTeam().opponent());
+					RobotInfo[] enemiesInRange = rc.senseNearbyRobots(36, rc.getTeam().opponent());
 					if (fate < 200) {
 						tryMove(Status.directions[rand.nextInt(8)],rc);
 					} else if (towers.length > 0){
@@ -68,6 +68,8 @@ public class Launcher extends Entity {
 				System.out.println("Launcher Exception");
 	            e.printStackTrace();
 			}
+			rc.yield();
 		}
 	}
+	
 }

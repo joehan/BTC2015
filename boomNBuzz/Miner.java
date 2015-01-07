@@ -1,4 +1,4 @@
-package missileAndDrones;
+package boomNBuzz;
 
 import battlecode.common.RobotController;
 

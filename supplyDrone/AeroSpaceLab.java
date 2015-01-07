@@ -1,6 +1,7 @@
-package missileAndDrones;
+package supplyDrone;
 
 import java.util.Random;
+
 
 import battlecode.common.RobotController;
 import battlecode.common.RobotType;
@@ -8,7 +9,7 @@ import battlecode.common.RobotType;
 public class AeroSpaceLab extends Entity {
 
 	public static void run(RobotController rc) {
-		while (true){
+		while(true) {
 			try {
 				Random rand = new Random();
 				if (rc.isCoreReady() && rc.getTeamOre() >= 500) {
@@ -18,6 +19,7 @@ public class AeroSpaceLab extends Entity {
 				System.out.println("AerospaceLab Exception");
 	            e.printStackTrace();
 			}
+			rc.yield();
 		}
 	}
 	

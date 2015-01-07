@@ -1,4 +1,4 @@
-package missileAndDrones;
+package supplyDrone;
 
 import battlecode.common.RobotController;
 import battlecode.common.RobotType;
@@ -10,8 +10,7 @@ public class MinerFactory extends Entity {
 			try {
 				if (rc.isCoreReady()) {
 					int numFactories = rc.readBroadcast(Status.numMinerFactoryChannel);
-					int numMiners = rc.readBroadcast(Status.numMinerChannel);
-					if (numFactories >= 1 && rc.getTeamOre() >= RobotType.MINER.oreCost && numMiners < 10) {
+					if (numFactories >= 1 && rc.getTeamOre() >= RobotType.MINER.oreCost && rc.readBroadcast(Status.numMinerChannel) < 15) {
 						trySpawn(Status.directions[Status.rand.nextInt(8)],RobotType.MINER, rc);
 					}
 				}

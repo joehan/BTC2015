@@ -1,4 +1,4 @@
-package missileAndDrones;
+package walkingBackwards;
 
 import java.util.Random;
 
@@ -6,6 +6,7 @@ import battlecode.common.Direction;
 import battlecode.common.MapLocation;
 import battlecode.common.RobotController;
 import battlecode.common.RobotInfo;
+import battlecode.common.RobotType;
 
 public class Launcher extends Entity {
 
@@ -51,8 +52,19 @@ public class Launcher extends Entity {
 				if (rc.isCoreReady()) {
 					MapLocation[] towers = rc.senseEnemyTowerLocations();
 					int fate = rand.nextInt(1000);
-					RobotInfo[] enemiesInRange = rc.senseNearbyRobots(80, rc.getTeam().opponent());
-					if (fate < 200) {
+					RobotInfo[] enemiesInRange = rc.senseNearbyRobots(36, rc.getTeam().opponent());
+					boolean frightened = false;
+					Direction fleeDirection = Status.directions[0];
+					for (RobotInfo enemy: enemiesInRange){
+						if (enemy.type == RobotType.MISSILE){
+							frightened = true;
+							fleeDirection = rc.getLocation().directionTo(enemy.location).opposite();
+							break;
+						}
+					}
+					if (frightened){
+						tryMove(fleeDirection, rc);
+					} else if (fate < 200) {
 						tryMove(Status.directions[rand.nextInt(8)],rc);
 					} else if (towers.length > 0){
 						if (enemiesInRange.length==0){
@@ -68,6 +80,8 @@ public class Launcher extends Entity {
 				System.out.println("Launcher Exception");
 	            e.printStackTrace();
 			}
+			rc.yield();
 		}
 	}
+	
 }
