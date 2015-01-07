@@ -1,4 +1,4 @@
-package basePlayer;
+package robotHunting;
 
 import battlecode.common.Direction;
 import battlecode.common.GameActionException;
@@ -93,7 +93,7 @@ public class Entity {
 	}
 	
 	public static boolean hunt(RobotType type, RobotController rc) throws GameActionException {
-		RobotInfo[] enemies = rc.senseNearbyRobots(Integer.MAX_VALUE, rc.getTeam().opponent());
+		RobotInfo[] enemies = rc.senseNearbyRobots(99999999, rc.getTeam().opponent());
 		for(RobotInfo enemy : enemies) {
 			if(enemy.type == type) {
 				tryMove(rc.getLocation().directionTo(enemy.location), rc);

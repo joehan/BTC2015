@@ -1,4 +1,4 @@
-package basePlayer;
+package robotHunting;
 
 import battlecode.common.RobotController;
 
