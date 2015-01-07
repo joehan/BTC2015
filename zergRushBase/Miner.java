@@ -1,23 +1,21 @@
-package basePlayer;
+package zergRushBase;
 
 import battlecode.common.RobotController;
 
-public class Beaver extends Entity {
+public class Miner extends Entity {
 
 	public static void run(RobotController rc) {
 		while(true) {
 			try {
-				if (rc.isWeaponReady()) {
-					attackSomething(rc);
-				}
 				if (rc.isCoreReady()) {
 					mine(rc);
 				}
 			} catch (Exception e) {
-				System.out.println("Beaver Exception");
+				System.out.println("Miner Exception");
 	            e.printStackTrace();
 			}
 			rc.yield();
 		}
 	}
+	
 }
