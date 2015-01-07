@@ -1,4 +1,4 @@
-package basePlayer;
+package basePlayerMine;
 
 import battlecode.common.RobotController;
 
@@ -11,6 +11,7 @@ public class Beaver extends Entity {
 					attackSomething(rc);
 				}
 				if (rc.isCoreReady()) {
+					int factories = rc.readBroadcast(Status.numMinerFactoryChannel);
 					mine(rc);
 				}
 			} catch (Exception e) {
