@@ -11,11 +11,13 @@ public class Beaver extends Entity {
 				if (rc.isWeaponReady()) {
 					attackSomething(rc);
 				}
-				int factories = rc.readBroadcast(Status.numMinerFactoryChannel);
-				if (rc.getTeamOre() >= RobotType.MINERFACTORY.oreCost && factories < 1) {
-					tryBuild(Status.directions[Status.rand.nextInt(8)],RobotType.MINERFACTORY, rc);
-				} else {
-					mine(rc);
+				if (rc.isCoreReady()) {
+					int factories = rc.readBroadcast(Status.numMinerFactoryChannel);
+					if (rc.getTeamOre() >= RobotType.MINERFACTORY.oreCost && factories < 1) {
+						tryBuild(Status.directions[Status.rand.nextInt(8)],RobotType.MINERFACTORY, rc);
+					} else {
+						mine(rc);
+					}
 				}
 			} catch (Exception e) {
 				System.out.println("Beaver Exception");

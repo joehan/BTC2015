@@ -64,7 +64,7 @@ public class Entity {
 		BattleMap<MapLocation, Double> locationCountingOre = new BattleMap<MapLocation, Double>();
 		for (MapLocation loc : locationsInRange) {
 			double dist = Math.sqrt(myLoc.distanceSquaredTo(loc));
-			sum += rc.senseOre(loc) / dist;
+			sum += rc.senseOre(loc) / (dist + 1);
 			locationCountingOre.put(loc, sum);
 		}
 		double goTo = Status.rand.nextDouble() * sum;
@@ -78,6 +78,7 @@ public class Entity {
 			}
 		}
 		if (!hasMoved) {
+			System.out.println("towards hq");
 			tryMove(rc.getLocation().directionTo(rc.senseEnemyHQLocation()), rc);
 		}
 	}
