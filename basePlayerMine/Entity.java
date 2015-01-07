@@ -57,38 +57,42 @@ public class Entity {
 		}
 	}
 	
+	private static void dontMine(RobotController rc, MapLocation myLoc) throws GameActionException {
+		boolean hasMoved = false;
+		MapLocation[] locationsInRange = MapLocation.getAllMapLocationsWithinRadiusSq(myLoc, 9);
+		double sum = 0;
+		BattleMap<MapLocation, Double> locationCountingOre = new BattleMap<MapLocation, Double>();
+		for (MapLocation loc : locationsInRange) {
+			double dist = Math.sqrt(myLoc.distanceSquaredTo(loc));
+			sum += rc.senseOre(loc) / (dist + 1);
+			locationCountingOre.put(loc, sum);
+		}
+		double goTo = Status.rand.nextDouble() * sum;
+		if (sum > 0) {
+			for (MapLocation loc : locationsInRange) {
+				if (goTo < locationCountingOre.get(loc) && goTo >= locationCountingOre.get(loc) - rc.senseOre(loc) / Math.sqrt(myLoc.distanceSquaredTo(loc))) {
+					tryMove(rc.getLocation().directionTo(loc), rc);
+					hasMoved = true;
+					break;
+				}
+			}
+		}
+		if (!hasMoved) {
+			System.out.println("towards hq");
+			tryMove(rc.getLocation().directionTo(rc.senseEnemyHQLocation()), rc);
+		}
+	}
+	
 	public static void mine(RobotController rc) throws GameActionException {
 		MapLocation myLoc = rc.getLocation();
 		if (rc.senseOre(rc.getLocation()) > 0) {
 			if (Status.rand.nextInt(3) < 2) {
 				rc.mine();
 			} else {
-				boolean hasMoved = false;
-				MapLocation[] locationsInRange = MapLocation.getAllMapLocationsWithinRadiusSq(myLoc, 9);
-				Status.shuffleArray(locationsInRange);
-				for (MapLocation loc : locationsInRange) {
-					if (rc.senseOre(loc) > 0 && Status.rand.nextInt(4) < 1) {
-						tryMove(rc.getLocation().directionTo(loc), rc);
-						hasMoved = true;
-					}
-				}
-				if (!hasMoved) {
-					tryMove(rc.getLocation().directionTo(rc.senseEnemyHQLocation()), rc);
-				}
+				dontMine(rc, myLoc);
 			}
 		} else {
-			boolean hasMoved = false;
-			MapLocation[] locationsInRange = MapLocation.getAllMapLocationsWithinRadiusSq(myLoc, 9);
-			Status.shuffleArray(locationsInRange);
-			for (MapLocation loc : locationsInRange) {
-				if (rc.senseOre(loc) > 0 && Status.rand.nextInt(4) < 1) {
-					tryMove(rc.getLocation().directionTo(loc), rc);
-					hasMoved = true;
-				}
-			}
-			if (!hasMoved) {
-				tryMove(rc.getLocation().directionTo(rc.senseEnemyHQLocation()), rc);
-			}
+			dontMine(rc, myLoc);
 		}
 	}
 
