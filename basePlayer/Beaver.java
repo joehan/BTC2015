@@ -7,7 +7,9 @@ public class Beaver extends Entity {
 	public static void run(RobotController rc) {
 		while(true) {
 			try {
-				mine(rc);
+				if (rc.isCoreReady()) {
+					mine(rc);
+				}
 			} catch (Exception e) {
 				System.out.println("Beaver Exception");
 	            e.printStackTrace();
