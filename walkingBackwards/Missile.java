@@ -1,4 +1,4 @@
-package boomNBuzz;
+package walkingBackwards;
 
 import battlecode.common.MapLocation;
 import battlecode.common.RobotController;
