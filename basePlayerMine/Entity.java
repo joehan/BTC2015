@@ -59,15 +59,15 @@ public class Entity {
 	
 	private static void dontMine(RobotController rc, MapLocation myLoc) throws GameActionException {
 		boolean hasMoved = false;
-		MapLocation[] locationsInRange = MapLocation.getAllMapLocationsWithinRadiusSq(myLoc, 9);
+		MapLocation[] locationsInRange = MapLocation.getAllMapLocationsWithinRadiusSq(myLoc, 6);
 		double sum = 0;
 		BattleMap<MapLocation, Double> locationCountingOre = new BattleMap<MapLocation, Double>();
 		for (MapLocation loc : locationsInRange) {
-			double dist = Math.sqrt(myLoc.distanceSquaredTo(loc));
-			sum += rc.senseOre(loc) / (dist + 1);
+			sum += rc.senseOre(loc) / (Math.sqrt(myLoc.distanceSquaredTo(loc)) + 1);
 			locationCountingOre.put(loc, sum);
 		}
 		double goTo = Status.rand.nextDouble() * sum;
+		System.out.println(locationsInRange.length);
 		if (sum > 0) {
 			for (MapLocation loc : locationsInRange) {
 				if (goTo < locationCountingOre.get(loc) && goTo >= locationCountingOre.get(loc) - rc.senseOre(loc) / Math.sqrt(myLoc.distanceSquaredTo(loc))) {

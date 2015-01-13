@@ -2,6 +2,7 @@ package basePlayer;
 
 import battlecode.common.Direction;
 import battlecode.common.GameActionException;
+import battlecode.common.GameConstants;
 import battlecode.common.MapLocation;
 import battlecode.common.RobotController;
 import battlecode.common.RobotInfo;
@@ -59,7 +60,7 @@ public class Entity {
 	
 	private static void dontMine(RobotController rc, MapLocation myLoc) throws GameActionException {
 		boolean hasMoved = false;
-		MapLocation[] locationsInRange = MapLocation.getAllMapLocationsWithinRadiusSq(myLoc, 9);
+		MapLocation[] locationsInRange = MapLocation.getAllMapLocationsWithinRadiusSq(myLoc, 6);
 		double sum = 0;
 		BattleMap<MapLocation, Double> locationCountingOre = new BattleMap<MapLocation, Double>();
 		for (MapLocation loc : locationsInRange) {
@@ -94,6 +95,20 @@ public class Entity {
 		} else {
 			dontMine(rc, myLoc);
 		}
+	}
+	
+	public static void shareSupply(RobotController rc) throws GameActionException {
+		RobotInfo[] friends = rc.senseNearbyRobots(rc.getLocation(), GameConstants.SUPPLY_TRANSFER_RADIUS_SQUARED, rc.getTeam());
+		RobotInfo trans = null;
+		for(RobotInfo friend:friends) {
+			if(friend.supplyLevel < rc.getSupplyLevel() && friend.type != RobotType.MISSILE) {
+				trans = friend;
+			}
+		}
+		if(trans != null) {
+			rc.transferSupplies((int) ((rc.getSupplyLevel()-trans.supplyLevel)/2), trans.location);
+		}
+		
 	}
 	
 	public static boolean hunt(RobotType type, RobotController rc) throws GameActionException {
