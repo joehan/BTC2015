@@ -2,7 +2,6 @@ package basePlayer;
 
 import battlecode.common.Direction;
 import battlecode.common.GameActionException;
-import battlecode.common.GameConstants;
 import battlecode.common.MapLocation;
 import battlecode.common.RobotController;
 import battlecode.common.RobotInfo;
@@ -64,11 +63,11 @@ public class Entity {
 		double sum = 0;
 		BattleMap<MapLocation, Double> locationCountingOre = new BattleMap<MapLocation, Double>();
 		for (MapLocation loc : locationsInRange) {
-			double dist = Math.sqrt(myLoc.distanceSquaredTo(loc));
-			sum += rc.senseOre(loc) / (dist + 1);
+			sum += rc.senseOre(loc) / (Math.sqrt(myLoc.distanceSquaredTo(loc)) + 1);
 			locationCountingOre.put(loc, sum);
 		}
 		double goTo = Status.rand.nextDouble() * sum;
+		System.out.println(locationsInRange.length);
 		if (sum > 0) {
 			for (MapLocation loc : locationsInRange) {
 				if (goTo < locationCountingOre.get(loc) && goTo >= locationCountingOre.get(loc) - rc.senseOre(loc) / Math.sqrt(myLoc.distanceSquaredTo(loc))) {
@@ -95,60 +94,6 @@ public class Entity {
 		} else {
 			dontMine(rc, myLoc);
 		}
-	}
-	
-	public static void shareSupply(RobotController rc) throws GameActionException {
-		RobotInfo[] friends = rc.senseNearbyRobots(rc.getLocation(), GameConstants.SUPPLY_TRANSFER_RADIUS_SQUARED, rc.getTeam());
-		RobotInfo trans = null;
-		for(RobotInfo friend:friends) {
-			if(friend.supplyLevel < rc.getSupplyLevel() && friend.type != RobotType.MISSILE) {
-				trans = friend;
-			}
-		}
-		if(trans != null) {
-			rc.transferSupplies((int) ((rc.getSupplyLevel()-trans.supplyLevel)/2), trans.location);
-		}
-		
-	}
-	
-	public static boolean hunt(RobotType type, RobotController rc) throws GameActionException {
-		RobotInfo[] enemies = rc.senseNearbyRobots(99999999, rc.getTeam().opponent());
-		for(RobotInfo enemy : enemies) {
-			if(enemy.type == type) {
-				tryMove(rc.getLocation().directionTo(enemy.location), rc);
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public static boolean huntList(RobotType[] types, RobotController rc) throws GameActionException {
-		for(RobotType type : types) {
-			if(hunt(type, rc)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public static boolean huntAttack(RobotType type, RobotController rc) throws GameActionException {
-		RobotInfo[] enemies = rc.senseNearbyRobots(rc.getType().attackRadiusSquared, rc.getTeam().opponent());
-		for(RobotInfo enemy : enemies) {
-			if(enemy.type == type) {
-				rc.attackLocation(enemy.location);
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public static boolean huntAttackList(RobotType[] types, RobotController rc) throws GameActionException {
-		for(RobotType type : types) {
-			if(huntAttack(type, rc)) {
-				return true;
-			}
-		}
-		return false;
 	}
 	
 	public static void shareSupply(RobotController rc) throws GameActionException {

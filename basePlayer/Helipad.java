@@ -1,7 +1,6 @@
 package basePlayer;
 
 import battlecode.common.RobotController;
-import battlecode.common.RobotType;
 
 public class Helipad extends Entity {
 
