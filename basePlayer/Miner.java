@@ -12,6 +12,7 @@ public class Miner extends Entity {
 				}
 				if (rc.isCoreReady()) {
 					mine(rc);
+					shareSupply(rc);
 				}
 			} catch (Exception e) {
 				System.out.println("Miner Exception");

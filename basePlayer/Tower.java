@@ -10,6 +10,9 @@ public class Tower extends Entity {
 				if(rc.isWeaponReady()) {
 					attackSomething(rc);
 				}
+				if(rc.isCoreReady()) {
+					shareSupply(rc);
+				}
 			} catch (Exception e) {
 				System.out.println("Tower Exception");
 	            e.printStackTrace();

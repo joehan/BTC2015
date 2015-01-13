@@ -76,6 +76,7 @@ public class Launcher extends Entity {
 							tryMove(rc.getLocation().directionTo(rc.senseEnemyHQLocation()),rc);
 						}
 					}
+					shareSupply(rc);
 				}
 			} catch (Exception e) {
 				System.out.println("Launcher Exception");

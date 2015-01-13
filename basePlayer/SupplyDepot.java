@@ -7,7 +7,7 @@ public class SupplyDepot extends Entity {
 	public static void run(RobotController rc) {
 		while(true) {
 			try {
-				//TODO: SupplyDepot
+				shareSupply(rc);
 			} catch (Exception e) {
 				System.out.println("SupplyDepot Exception");
 	            e.printStackTrace();

@@ -36,6 +36,7 @@ public class Beaver extends Entity {
 					} else {
 						mine(rc);
 					}
+					shareSupply(rc);
 				}
 		} catch (Exception e) {
 				System.out.println("Beaver Exception");

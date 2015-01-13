@@ -22,9 +22,8 @@ public class HQ extends Entity {
 						&& (rc.readBroadcast(Status.numMinerFactoryChannel) < 1 
 								|| rc.readBroadcast(Status.numBeaverChannel) < 5)) {
 						trySpawn(Status.directions[Status.rand.nextInt(8)], RobotType.BEAVER, rc);
-					} else {
-						shareSupply(rc);
 					}
+					shareSupply(rc);
 				}
 			} catch (Exception e) {
 				System.out.println("HQ Exception");
