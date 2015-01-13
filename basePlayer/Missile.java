@@ -24,8 +24,10 @@ public class Missile extends Entity {
 						}
 					} else if (enemies.length > 0){
 						tryMove(rc.getLocation().directionTo(enemies[0].location),rc);
-					} else {
+					} else if (towers.length >0) {
 						tryMove(rc.getLocation().directionTo(towers[0]),rc);
+					} else {
+						tryMove(rc.getLocation().directionTo(rc.senseEnemyHQLocation()), rc);
 					}
 				}
 			} catch (Exception e) {
