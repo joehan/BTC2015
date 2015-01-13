@@ -135,6 +135,21 @@ public class Entity {
 		}
 		return false;
 	}
+	
+	public static void shareSupply(RobotController rc) throws GameActionException {
+		RobotInfo[] friendsInRange = rc.senseNearbyRobots(15, rc.getTeam());
+		for (RobotInfo friend: friendsInRange){
+			if (friend.supplyLevel < friend.type.supplyUpkeep * 10){
+				int supplyToGive = (int) (rc.getSupplyLevel() - (rc.getType().supplyUpkeep*30));
+				rc.transferSupplies(supplyToGive, friend.location);
+			} else if ((friend.type == RobotType.AEROSPACELAB 
+					|| friend.type == RobotType.MINERFACTORY 
+					|| friend.type == RobotType.HELIPAD) && (friend.supplyLevel < 500)){
+				rc.transferSupplies(500-(int)(friend.supplyLevel), friend.location);
+			}
+		}
+		
+	}
 
 	// Counts the number of each type of unit and broadcasts it.
 	public static void countUnitsAndBroadcast(RobotController rc, Team myTeam) throws GameActionException {

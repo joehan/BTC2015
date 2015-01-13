@@ -3,6 +3,7 @@ package basePlayer;
 import battlecode.common.MapLocation;
 import battlecode.common.RobotController;
 import battlecode.common.RobotInfo;
+import battlecode.common.RobotType;
 
 public class Missile extends Entity {
 
@@ -15,7 +16,12 @@ public class Missile extends Entity {
 	            RobotInfo[] enemies = rc.senseNearbyRobots(36, rc.getTeam().opponent());
 				if (rc.isCoreReady()) {
 					if (adjacentEnemies.length > 0 && adjacentFriends.length ==0) {
-						rc.explode();
+						for (RobotInfo enemy: adjacentEnemies){
+							if (enemy.type != RobotType.MISSILE){
+								rc.explode();
+								break;
+							}
+						}
 					} else if (enemies.length > 0){
 						tryMove(rc.getLocation().directionTo(enemies[0].location),rc);
 					} else {
