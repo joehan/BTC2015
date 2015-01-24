@@ -1,7 +1,10 @@
-package boomNBuzz;
+package gonnaWin;
 
+import battlecode.common.Direction;
+import battlecode.common.MapLocation;
 import battlecode.common.RobotController;
 import battlecode.common.RobotType;
+
 
 public class Soldier extends Entity {
 
@@ -26,7 +29,11 @@ public class Soldier extends Entity {
 							tryMove(Status.directions[Status.rand.nextInt(8)], rc);
 						}
 					} else {
-						tryMove(Status.directions[Status.rand.nextInt(8)], rc);
+						MapLocation enemyHQ = rc.senseEnemyHQLocation();
+						MapLocation ourHQ = rc.senseHQLocation();
+						MapLocation middle = new MapLocation((ourHQ.x+enemyHQ.x)/2, (ourHQ.y+enemyHQ.y)/2);
+						Direction dirMiddle = rc.getLocation().directionTo(middle);
+						tryMove(dirMiddle, rc);
 					}
 				}
 			} catch (Exception e) {
