@@ -99,8 +99,12 @@ public class Entity {
 		RobotInfo[] friendsInRange = rc.senseNearbyRobots(15, rc.getTeam());
 		for (RobotInfo friend: friendsInRange){
 			if (friend.supplyLevel < friend.type.supplyUpkeep * 10){
-				int supplyToGive = (int) (rc.getSupplyLevel() - (rc.getType().supplyUpkeep*30));
-				rc.transferSupplies(supplyToGive, friend.location);
+				int supplyToGive = (int) (rc.getSupplyLevel() - (friend.type.supplyUpkeep*30));
+				if(supplyToGive <= 0) {
+					//rc.transferSupplies((int) (rc.getSupplyLevel()/2), friend.location);
+				} else {
+					rc.transferSupplies(supplyToGive, friend.location);
+				}
 			} else if ((friend.type == RobotType.AEROSPACELAB 
 					|| friend.type == RobotType.MINERFACTORY 
 					|| friend.type == RobotType.HELIPAD) && (friend.supplyLevel < 500)){
@@ -108,6 +112,46 @@ public class Entity {
 			}
 		}
 		
+	}
+	
+	public static boolean hunt(RobotType type, RobotController rc) throws GameActionException {
+		RobotInfo[] enemies = rc.senseNearbyRobots(99999999, rc.getTeam().opponent());
+		for(RobotInfo enemy : enemies) {
+			if(enemy.type == type) {
+				tryMove(rc.getLocation().directionTo(enemy.location), rc);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static boolean huntList(RobotType[] types, RobotController rc) throws GameActionException {
+		for(RobotType type : types) {
+			if(hunt(type, rc)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static boolean huntAttack(RobotType type, RobotController rc) throws GameActionException {
+		RobotInfo[] enemies = rc.senseNearbyRobots(rc.getType().attackRadiusSquared, rc.getTeam().opponent());
+		for(RobotInfo enemy : enemies) {
+			if(enemy.type == type) {
+				rc.attackLocation(enemy.location);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static boolean huntAttackList(RobotType[] types, RobotController rc) throws GameActionException {
+		for(RobotType type : types) {
+			if(huntAttack(type, rc)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	// Counts the number of each type of unit and broadcasts it.
