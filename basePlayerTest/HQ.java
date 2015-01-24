@@ -1,4 +1,4 @@
-package basePlayer;
+package basePlayerTest;
 
 import battlecode.common.RobotController;
 import battlecode.common.RobotType;

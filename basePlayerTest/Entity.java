@@ -1,4 +1,4 @@
-package basePlayer;
+package basePlayerTest;
 
 import battlecode.common.Direction;
 import battlecode.common.GameActionException;
