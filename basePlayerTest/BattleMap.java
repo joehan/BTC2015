@@ -29,4 +29,8 @@ public class BattleMap<S, T> {
 		keys.remove(index);
 		return values.remove(index);
 	}
+	
+	public ArrayList<S> keys() {
+		return keys;
+	}
 }
