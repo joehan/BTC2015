@@ -32,7 +32,7 @@ public class Beaver extends Entity {
 							tryBuild(Status.directions[rand.nextInt(8)],RobotType.SUPPLYDEPOT, rc);
 						} else if(barracks < 2 && ore >= RobotType.BARRACKS.oreCost) {
 							tryBuild(Status.directions[rand.nextInt(8)], RobotType.BARRACKS, rc);
-						} else if(tankFactories == 0 && ore >= RobotType.TANKFACTORY.oreCost) {
+						} else if(tankFactories < 2 && ore >= RobotType.TANKFACTORY.oreCost) {
 							tryBuild(Status.directions[rand.nextInt(8)], RobotType.TANKFACTORY, rc);
 						} else {
 							mine(rc);
