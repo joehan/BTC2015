@@ -144,7 +144,6 @@ public class Entity {
 				return true;
 			}
 		}
-		attackSomething(rc);
 		return false;
 	}
 	
@@ -154,6 +153,7 @@ public class Entity {
 				return true;
 			}
 		}
+		attackSomething(rc);
 		return false;
 	}
 
