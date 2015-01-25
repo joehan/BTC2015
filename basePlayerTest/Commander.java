@@ -13,11 +13,11 @@ public class Commander extends Entity {
 					huntAttackList(Status.order, rc);
 				}
 				boolean towerInRange = false;
-				RobotInfo[] nearbyRobots = rc.senseNearbyRobots(RobotType.TOWER.attackRadiusSquared + 9, rc.getTeam().opponent());
+				RobotInfo[] nearbyRobots = rc.senseNearbyRobots(RobotType.TOWER.attackRadiusSquared + 6, rc.getTeam().opponent());
 				for (RobotInfo bot : nearbyRobots) {
-					if (bot.type.equals(RobotType.TOWER)) {
-						tryMove(bot.location.directionTo(rc.getLocation()), rc);
-						towerInRange = true;
+					if (bot.location.distanceSquaredTo(rc.getLocation()) + 16 < bot.type.attackRadiusSquared || bot.type.equals(RobotType.TOWER) || bot.type.equals(RobotType.HQ)) {
+						towerInRange=true;
+						tryMove(rc.getLocation().directionTo(rc.senseHQLocation()), rc);
 					}
 				}
 				if (!towerInRange) {

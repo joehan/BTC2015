@@ -63,8 +63,10 @@ public class Entity {
 		double sum = 0;
 		BattleMap<MapLocation, Double> locationCountingOre = new BattleMap<MapLocation, Double>();
 		for (MapLocation loc : locationsInRange) {
-			sum += rc.senseOre(loc) / (Math.sqrt(myLoc.distanceSquaredTo(loc)) + 1);
-			locationCountingOre.put(loc, sum);
+			if (!rc.isLocationOccupied(loc)) {
+				sum += rc.senseOre(loc) / (Math.sqrt(myLoc.distanceSquaredTo(loc)) + 1);
+				locationCountingOre.put(loc, sum);
+			}
 		}
 		double goTo = Status.rand.nextDouble() * sum;
 		if (sum > 0) {

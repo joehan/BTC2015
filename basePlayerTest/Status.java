@@ -41,7 +41,7 @@ public class Status {
 	// Game Variables
 	static Direction[] directions = {Direction.NORTH, Direction.NORTH_EAST, Direction.EAST, Direction.SOUTH_EAST, Direction.SOUTH, Direction.SOUTH_WEST, Direction.WEST, Direction.NORTH_WEST};
 	static Random rand = new Random(Double.doubleToLongBits(Math.random()));
-	static RobotType[] order = {RobotType.TOWER, RobotType.HQ, RobotType.TANK, RobotType.SOLDIER, RobotType.BASHER, RobotType.MINER, RobotType.BEAVER};
+	static RobotType[] order = {RobotType.TOWER, RobotType.HQ, RobotType.COMMANDER, RobotType.TANK, RobotType.SOLDIER, RobotType.BASHER, RobotType.MINER, RobotType.BEAVER};
 	
 	// Initialize Variables above
 	public static void init(RobotController rc) {
