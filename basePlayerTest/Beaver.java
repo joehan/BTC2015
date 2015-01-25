@@ -20,19 +20,26 @@ public class Beaver extends Entity {
 					
 					MapLocation myLoc = rc.getLocation();
 					int mineFactories = rc.readBroadcast(Status.numMinerFactoryChannel);
-					int helipads = rc.readBroadcast(Status.numHelipadChannel);
-					int aerospaceLabs = rc.readBroadcast(Status.numAeroSpaceLabChannel);
+					int institutes = rc.readBroadcast(Status.numTechnologyInstituteChannel);
+					int fields = rc.readBroadcast(Status.numTrainingFieldChannel);
+					int barracks = rc.readBroadcast(Status.numBarracksChannel);
 					int supplyDepots = rc.readBroadcast(Status.numSupplyDepotChannel);
 					double ore = rc.getTeamOre();
 					// 
-					if (ore >= RobotType.MINERFACTORY.oreCost && mineFactories==0){ 
+					if (ore >= RobotType.MINERFACTORY.oreCost && mineFactories == 0){ 
 						tryBuild(Status.directions[rand.nextInt(8)],RobotType.MINERFACTORY, rc);
-					} else if (supplyDepots < 1 && rc.getTeamOre() > 100){
-						tryBuild(Status.directions[rand.nextInt(8)],RobotType.SUPPLYDEPOT, rc);
-					} else if (ore >= 300 && helipads < 1 && mineFactories>0) {
-						tryBuild(Status.directions[rand.nextInt(8)],RobotType.HELIPAD, rc);
-					} else if((ore >= 500 && aerospaceLabs < 2 && helipads>0) || (ore>=1000 && helipads>0)) {
-						tryBuild(Status.directions[rand.nextInt(8)],RobotType.AEROSPACELAB, rc);
+					} else if (mineFactories != 0) {
+						if(supplyDepots < 1 && rc.getTeamOre() >= RobotType.SUPPLYDEPOT.oreCost){
+							tryBuild(Status.directions[rand.nextInt(8)],RobotType.SUPPLYDEPOT, rc);
+						} else if(barracks < 3 && ore >= RobotType.BARRACKS.oreCost) {
+							tryBuild(Status.directions[rand.nextInt(8)], RobotType.BARRACKS, rc);
+						} else if(institutes < 1 && ore >= RobotType.TECHNOLOGYINSTITUTE.oreCost) {
+							tryBuild(Status.directions[rand.nextInt(8)], RobotType.TECHNOLOGYINSTITUTE, rc);
+						} else if(fields < 1 && ore >= RobotType.TRAININGFIELD.oreCost) {
+							tryBuild(Status.directions[rand.nextInt(8)], RobotType.TRAININGFIELD, rc);
+						} else {
+							mine(rc);
+						}
 					} else {
 						mine(rc);
 					}

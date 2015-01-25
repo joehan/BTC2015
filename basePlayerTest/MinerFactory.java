@@ -10,7 +10,7 @@ public class MinerFactory extends Entity {
 			try {
 				if (rc.isCoreReady()) {
 					int numFactories = rc.readBroadcast(Status.numMinerFactoryChannel);
-					if (numFactories >= 1 && rc.getTeamOre() >= RobotType.MINER.oreCost && rc.readBroadcast(Status.numMinerChannel) < 15) {
+					if (numFactories >= 1 && rc.getTeamOre() >= RobotType.MINER.oreCost && rc.readBroadcast(Status.numMinerChannel) < 20) {
 						trySpawn(Status.directions[Status.rand.nextInt(8)],RobotType.MINER, rc);
 					}
 					shareSupply(rc);

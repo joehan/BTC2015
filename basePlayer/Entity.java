@@ -68,7 +68,7 @@ public class Entity {
 		}
 		double goTo = Status.rand.nextDouble() * sum;
 		if (sum > 0) {
-			for (MapLocation loc : locationsInRange) {
+			for (MapLocation loc : locationCountingOre.keys()) {
 				if (goTo < locationCountingOre.get(loc) && goTo >= locationCountingOre.get(loc) - rc.senseOre(loc) / Math.sqrt(myLoc.distanceSquaredTo(loc))) {
 					tryMove(rc.getLocation().directionTo(loc), rc);
 					hasMoved = true;

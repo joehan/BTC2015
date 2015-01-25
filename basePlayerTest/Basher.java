@@ -7,7 +7,7 @@ public class Basher extends Entity {
 	public static void run(RobotController rc) {
 		while(true) {
 			try {
-	            //TODO: Basher
+				soldierRush(rc);
 	        } catch (Exception e) {
 				System.out.println("Basher Exception");
 				e.printStackTrace();
