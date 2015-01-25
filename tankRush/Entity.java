@@ -142,6 +142,7 @@ public class Entity {
 				return true;
 			}
 		}
+		attackSomething(rc);
 		return false;
 	}
 	
