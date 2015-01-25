@@ -64,8 +64,8 @@ public class Entity {
 		BattleMap<MapLocation, Double> locationCountingOre = new BattleMap<MapLocation, Double>();
 		for (MapLocation loc : locationsInRange) {
 			if (!rc.isLocationOccupied(loc)) {
-				sum += rc.senseOre(loc) / (Math.sqrt(myLoc.distanceSquaredTo(loc)) + 1);
-				locationCountingOre.put(loc, sum);
+			sum += rc.senseOre(loc) / (Math.sqrt(myLoc.distanceSquaredTo(loc)) + 1);
+			locationCountingOre.put(loc, sum);
 			}
 		}
 		double goTo = Status.rand.nextDouble() * sum;
@@ -125,6 +125,21 @@ public class Entity {
 			}
 		}
 		return false;
+	}
+	
+	public static void soldierRush(RobotController rc) throws GameActionException {
+		if(rc.isCoreReady()) {
+			int soldiersAndBashers = rc.readBroadcast(Status.numSoldierChannel) + rc.readBroadcast(Status.numBasherChannel);
+			if(soldiersAndBashers > 30 || rc.readBroadcast(Status.rushChannel) == 1) {
+				if(!huntList(Status.order, rc)) {
+					tryMove(rc.getLocation().directionTo(rc.senseEnemyHQLocation()), rc);
+				}
+				rc.broadcast(Status.rushChannel, 1);
+			} else {
+				tryMove(rc.getLocation().directionTo(rc.senseHQLocation()), rc);
+			}
+			shareSupply(rc);
+		}
 	}
 	
 	public static boolean huntList(RobotType[] types, RobotController rc) throws GameActionException {

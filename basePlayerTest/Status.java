@@ -4,6 +4,7 @@ import java.util.Random;
 
 import battlecode.common.Direction;
 import battlecode.common.RobotController;
+import battlecode.common.RobotType;
 
 public class Status {
 	
@@ -33,9 +34,14 @@ public class Status {
 	static final int numTechnologyInstituteChannel = 18;
 	static final int numTrainingFieldChannel = 19;
 	
+	static final int rushChannel = 20;
+	
+	static final int commanderTrainingChannel = 21;
+	
 	// Game Variables
 	static Direction[] directions = {Direction.NORTH, Direction.NORTH_EAST, Direction.EAST, Direction.SOUTH_EAST, Direction.SOUTH, Direction.SOUTH_WEST, Direction.WEST, Direction.NORTH_WEST};
 	static Random rand = new Random(Double.doubleToLongBits(Math.random()));
+	static RobotType[] order = {RobotType.TOWER, RobotType.HQ, RobotType.TANK, RobotType.SOLDIER, RobotType.BASHER, RobotType.MINER, RobotType.BEAVER};
 	
 	// Initialize Variables above
 	public static void init(RobotController rc) {
