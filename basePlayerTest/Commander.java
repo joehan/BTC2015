@@ -15,7 +15,7 @@ public class Commander extends Entity {
 				boolean towerInRange = false;
 				RobotInfo[] nearbyRobots = rc.senseNearbyRobots(RobotType.TOWER.attackRadiusSquared + 6, rc.getTeam().opponent());
 				for (RobotInfo bot : nearbyRobots) {
-					if (bot.location.distanceSquaredTo(rc.getLocation()) + 16 < bot.type.attackRadiusSquared || bot.type.equals(RobotType.TOWER) || bot.type.equals(RobotType.HQ)) {
+					if (bot.location.distanceSquaredTo(rc.getLocation()) < bot.type.attackRadiusSquared  + 9|| bot.type.equals(RobotType.TOWER) || bot.type.equals(RobotType.HQ)) {
 						towerInRange=true;
 						tryMove(rc.getLocation().directionTo(rc.senseHQLocation()), rc);
 					}
