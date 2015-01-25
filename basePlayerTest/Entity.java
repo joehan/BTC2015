@@ -79,7 +79,6 @@ public class Entity {
 			}
 		}
 		if (!hasMoved) {
-			System.out.println("towards hq");
 			tryMove(rc.getLocation().directionTo(rc.senseEnemyHQLocation()), rc);
 		}
 	}
@@ -168,9 +167,10 @@ public class Entity {
 				return true;
 			}
 		}
+		attackSomething(rc);
 		return false;
 	}
-
+	
 	// Counts the number of each type of unit and broadcasts it.
 	public static void countUnitsAndBroadcast(RobotController rc, Team myTeam) throws GameActionException {
 		RobotInfo[] myRobots = rc.senseNearbyRobots(999999, myTeam);

@@ -79,7 +79,6 @@ public class Entity {
 			}
 		}
 		if (!hasMoved) {
-			System.out.println("towards hq");
 			tryMove(rc.getLocation().directionTo(rc.senseEnemyHQLocation()), rc);
 		}
 	}
