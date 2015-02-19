@@ -6,6 +6,8 @@ import battlecode.common.RobotType;
 public class HQ extends Entity {
 
 	public static void run(RobotController rc) {
+		System.out.println(rc.getLocation().distanceSquaredTo(rc.senseEnemyHQLocation()));
+		rc.broadcast(rc.getLocation().distanceSquaredTo(rc.senseEnemyHQLocation()), );
 		while(true) {
 			try {
 				int fate = Status.rand.nextInt(10000);

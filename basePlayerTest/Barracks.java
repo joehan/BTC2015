@@ -11,7 +11,7 @@ public class Barracks extends Entity {
 				if(rc.isCoreReady()) {
 					int fate = Status.rand.nextInt(5);
 					double ore = rc.getTeamOre();
-					if (rc.readBroadcast(Status.commanderTrainingChannel) == 1) {
+					if (rc.hasCommander()) {
 						if(fate < 0 && ore >= RobotType.SOLDIER.oreCost) {
 							trySpawn(Status.directions[Status.rand.nextInt(8)], RobotType.SOLDIER, rc);
 						} else if(ore >= RobotType.BASHER.oreCost) {

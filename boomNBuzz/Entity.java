@@ -115,6 +115,8 @@ public class Entity {
 						hasMoved = true;
 						break;
 					}
+					RobotInfo[] nearbyRobots = rc.senseNearbyRobots(RobotType.TOWER.attackRadiusSquared, rc.getTeam().opponent());
+					nearbyRobots[2].type.attackRadiusSquared
 				}
 				if (!hasMoved) {
 					tryMove(rc.getLocation().directionTo(rc.senseEnemyHQLocation()), rc);
